@@ -10,6 +10,7 @@ import math
 
 from setuptools import Command
 
+#tworzenie okienka 
 window = tk.Tk()
 
 window.title("Predominance Area Diagram")
@@ -18,6 +19,7 @@ window.geometry('492x420+492+420')
 temperatura_podaj = tk.Label(text="Temperature ["+u'\u00B0'+"C]:")
 temperatura_podaj.place(x=5, y=5)
 
+#tworzenie obiektów tekstowych (labels)
 lista_temp = []
 entry = tk.Entry()
 entry.place(x=130, y=5)
@@ -138,7 +140,7 @@ Reddy_Zhang = 0
 lista_UW = []
 lista_Altman =[]
 
-#okienka zaznaczenia
+#tworzenie okienek zaznaczenia. Po kliknięciu w "plot" stworzy się wykres uwzględniający tylko zaznaczone modele
 giordano = tk.IntVar() # zmienna przechowująca dane typu int, która zostanie przypisana do kontrolki
 checkbutton = tk.Checkbutton(window, text='Giordano et al. (log' + u'\u03B7'+')', variable=giordano, \
                          onvalue=1, offvalue=0).place(x=200, y=80)
@@ -152,6 +154,8 @@ Reddy_Zhangb = tk.IntVar()
 checkbutton = tk.Checkbutton(window, text='Reddy_Zhang (ln' + u'\u03B7'+')', variable=Reddy_Zhangb, \
                          onvalue=1, offvalue=0).place(x=200, y=140)
 
+#funkcja obliczająca lepkość stopu krzemianowego na podstawie składu chemicznego i temperatury
+#różnymi metodami
 def obliczenia(event):
     global temp
     temp = int(entry.get())
@@ -309,7 +313,7 @@ def obliczenia(event):
     #lepkosc_Urbain = float(a_Urbain * (temp + 273) * 2.71828 ** ((b_Urbain * 1000)/(temp + 273)))
     #lepkosc_Urbain = round(lepkosc_Urbain, 5)
 
-
+#funkcja tworząca wykresy lepkości
 def plotting(event):
     lista_b1 = [(-33.5556+0.0351623*x)/(1-0.0022362*x-0.00000166697*x **2) for x in lista_temp]
     lista_b2 = [(-93.6494+0.2317411*x)/(1-0.0054597*x+0.00001361072*x**2) for x in lista_temp]
@@ -346,7 +350,7 @@ def plotting(event):
     # rendering the plot
     plt.show()
     
-
+#tworzenie przycisków
 button = tk.Button(text="Calculate")
 button.bind("<Button-1>", obliczenia)
 
@@ -360,7 +364,7 @@ button2.bind("<Button-1>", plotting)
 button2.pack()
 button2.place(x=200, y=40)
 
-#
+# tekst przy krórym pojawią się wartości lepkości 
 label_SiO2 = tk.Label(text = 'SiO2').place(x=10, y=50)
 label_TiO2 = tk.Label(text = 'TiO2').place(x=10, y=70)
 label_Al2O3 = tk.Label(text = 'Al2O3').place(x=10, y=90)
